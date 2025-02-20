@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Campo Nome -->
+        <label for="id_nome">Nome:</label>
+        {{ form.nome }}
+        {{ form.nome.errors }}
+        <br><br>
+    
+        <!-- Campo Data de Criação -->
+        <label for="id_data_criacao">Data de Criação:</label>
+        {{ form.data_criacao }}
+        {{ form.data_criacao.errors }}
+        <br><br>
+    
+        <!-- Campo Checklist -->
+        <label>Checklist:</label>
+        {{ form.checklist }}
+        {{ form.checklist.errors }}
+        <br><br>
+    
+        <!-- Botão de Envio -->
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

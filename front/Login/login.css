@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* Define a base para rem */
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    max-width: 45.5rem; /* 600px, maior que o valor anterior de 500px */
+}
+
+.card {
+    background: white;
+    padding: 2.5rem; /* 40px */
+    border-radius: 0.125rem; /* 10px */
+    box-shadow: 0px 0.375rem 0.9375rem rgba(0, 0, 0, 0.1); /* 6px 15px */
+    text-align: left; /* Alinha o conteúdo à esquerda */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Bloco verde dentro do card, na parte superior cobrindo metade (agora alinhado à direita) */
+.card-green-bar {
+    position: absolute;
+    top: 0;
+    right: 0; /* Agora alinhado à direita */
+    width: 70%; /* Apenas metade do card */
+    height: 0.375rem; /* 6px */
+    background-color: #2CA13D;
+}
+
+/* Bloco azul dentro do card, na parte inferior cobrindo metade (agora alinhado à esquerda) */
+.card-blue-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0; /* Agora alinhado à esquerda */
+    width: 70%; /* Apenas metade do card */
+    height: 0.375rem; /* 6px */
+    background-color: #007bff;
+}
+
+.logo {
+    width: 21.5rem; /* 344px */
+    margin-bottom: 0.9375rem; /* 15px */
+    margin-left: -2.5rem; /* Ajusta a logo para a esquerda */
+}
+
+.title {
+    font-size: 1.75rem; /* 28px */
+    margin-bottom: 1.5625rem; /* 25px */
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    text-align: left;
+    font-size: 1rem; /* 16px */
+    margin: 0.5rem 0; /* 8px */
+}
+
+input {
+    width: 100%; /* Largura do campo de entrada */
+    padding: 0.5rem 0; /* Ajustado para apenas uma linha */
+    font-size: 1rem; /* 16px */
+    margin-bottom: 1.25rem; /* 20px */
+    border: none; /* Removido a borda padrão */
+    border-bottom: 1px solid #ccc; /* Linha mais fina */
+    outline: none; /* Remove o foco padrão */
+    max-width: 70%; /* Limita a largura da linha */
+    margin-left: 0; /* Alinha à esquerda */
+}
+
+input:focus {
+    border-bottom: 1px solid #007bff; /* Altere a cor da linha quando o campo está em foco */
+}
+
+
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.625rem 1.25rem; /* Menor padding */
+    font-size: 1rem; /* Tamanho da fonte reduzido */
+    border-radius: 0.1125rem; /* 5px */
+    cursor: pointer;
+    width: 8rem; /* Largura fixa para o botão */
+}
+
+button:hover {
+    background-color: #0056b3;
+}

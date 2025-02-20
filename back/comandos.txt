@@ -1,0 +1,83 @@
+py -m venv .env        dependencias do projeto, pega as versoes de quando criado
+
+
+.\.env\Scripts\activate    entrar na env
+
+
+pip install django
+
+
+django-admin startproject fufu .
+
+
+py .\manage.py runserver
+
+
+
+comandos feitos para iniciar o nucleo do projeto, agora precisa dos app para dar vida e rodar.
+
+
+
+
+API é maneira segura de trafegar dados, receber, salvar, pode selecionar dados que quiser, somente necessário, atraves de filtro da API, possui varios meios de ser criados, mais popular é o Rest (json tmb).
+
+json é um objeto
+
+
+GET receber
+post envia
+put atualiza
+path envia, mas coisas especificas
+DELETE apaga registro dentro da API
+
+
+insomnia usado pra testar API's, ele retorna um json da API requisitadalocalhost, 127.0.0.*
+
+
+
+
+novo terminal dps do insomnia:
+
+
+django-admin startapp app
+
+py .\manage.py makemigrations          aqui mapea o banco de dados
+
+
+
+py .\manage.py migrate               aqu ele aplica
+
+
+
+py .\manage.py createsuperuser
+
+
+
+
+
+https://hp-api.onrender.com/api/characters
+
+
+
+
+pip freeze > requirements.txt
+
+pip install -r requirements.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
