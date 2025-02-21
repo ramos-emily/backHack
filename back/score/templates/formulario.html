@@ -7,27 +7,25 @@
 </head>
 <body>
     <form method="post">
-        {% csrf_token %}
-        
-        <!-- Campo Nome -->
-        <label for="id_nome">Nome:</label>
-        {{ form.nome }}
-        {{ form.nome.errors }}
-        <br><br>
-    
-        <!-- Campo Data de Criação -->
-        <label for="id_data_criacao">Data de Criação:</label>
-        {{ form.data_criacao }}
-        {{ form.data_criacao.errors }}
-        <br><br>
-    
-        <!-- Checklist -->
+
         <h1>Criar Formulário</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Renderiza o formulário -->
-        <button type="submit">Salvar</button>
-    </form>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Exibe o formulário com o campo de input para o nome e a data -->
+    
+    <h2>Checklist</h2>
+    <ul>
+        {% for item in checklist_itens %}
+            <li>
+                <input type="checkbox" name="item_{{ item.id }}" id="item_{{ item.id }}">
+                <label for="item_{{ item.id }}">{{ item.descricao }}</label>
+            </li>
+        {% endfor %}
+    </ul>
+    
+    <button type="submit">Salvar</button>
+</form>
     
 </body>
 </html>

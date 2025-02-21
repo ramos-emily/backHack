@@ -20,21 +20,19 @@ class ChecklistItem(models.Model):
 
 
 class Formulario(models.Model):
-    nome = models.CharField(max_length=100)  # Nome do formulário
-    data_criacao = models.DateTimeField(default=timezone.now)  # Campo renomeado
-    checklist = models.ManyToManyField('ChecklistItem', blank=True)  # Relação com ChecklistItem
+    nome = models.CharField(max_length=100)  # Nome do funcionário
+    data_criacao = models.DateTimeField(default=timezone.now)
+    checklist = models.ManyToManyField('ChecklistItem', blank=True)
+    percentual_conclusao = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.nome
 
-    @property
-    def percentual_conclusao(self):
-        """
-        Calcula o percentual de conclusão do checklist.
-        """
+    def atualizar_percentual_conclusao(self):
         total_itens = self.checklist.count()  # Total de itens no checklist
         if total_itens == 0:
-            return 0  # Evita divisão por zero
-
-        itens_concluidos = self.checklist.filter(is_checked=True).count()  # Itens marcados como concluídos
-        return (itens_concluidos / total_itens) * 100  # Retorna o percentual
+            self.percentual_conclusao = 0  # Evita divisão por zero
+        else:
+            itens_concluidos = self.checklist.filter(is_checked=True).count()  # Itens concluídos
+            self.percentual_conclusao = (itens_concluidos / total_itens) * 100  # Calcula o percentual
+        self.save()  # Salva o percentual no banco de dados

@@ -10,7 +10,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .forms import FormularioForm  # Certifique-se de que o formulário está definido em forms.py
+from .forms import FormularioForm 
+from django.db.models import Avg
+
+
 
 @login_required
 def minha_view_protegida(request):
@@ -73,6 +76,9 @@ def salvar_checklist(request, formulario_id):
             item.is_checked = item_id in request.POST
             item.save()  # Salva o status do item
         
+        # Atualiza o percentual de conclusão do formulário
+        formulario.atualizar_percentual_conclusao()
+        
         # Redireciona de volta ao formulário após salvar
         return redirect('detalhes_formulario', formulario_id=formulario.id)
 
@@ -83,9 +89,18 @@ def formulario_view(request):
     if request.method == 'POST':
         form = FormularioForm(request.POST)  # Cria o formulário com os dados enviados
         if form.is_valid():
-            form.save()  # Salva os dados no banco de dados
-            return redirect('home')  # Redireciona para a página inicial após o sucesso
+            formulario = form.save()  # Salva o formulário e obtém a instância salva
+            return redirect('salvar_checklist', formulario_id=formulario.id)  # Redireciona para a página de checklist
     else:
         form = FormularioForm()  # Exibe o formulário vazio
 
-    return render(request, 'formulario.html', {'form': form})  # Passa o formulário para o template
+    # Obtém todos os itens do checklist para exibição
+    checklist_itens = ChecklistItem.objects.all()
+
+    return render(request, 'formulario.html', {'form': form, 'checklist_itens': checklist_itens})
+
+def rendimento_equipe(request):
+    formularios = Formulario.objects.all()
+    media_equipe = Formulario.objects.aggregate(media_rendimento=Avg('percentual_conclusao'))['media_rendimento']
+    return render(request, 'rendimento_equipe.html', {'formularios': formularios, 'media_equipe': media_equipe})
+

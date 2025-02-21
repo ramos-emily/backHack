@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendimento da Equipe</title>
+</head>
+<body>
+    <h1>Rendimento da Equipe</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Funcionário</th>
+                <th>Percentual de Conclusão</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for formulario in formularios %}
+                <tr>
+                    <td>{{ formulario.nome }}</td>
+                    <td>{{ formulario.percentual_conclusao }}%</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Média da Equipe: {{ media_equipe|default:"0" }}%</p>
+</body>
+</html>

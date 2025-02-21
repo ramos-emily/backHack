@@ -3,6 +3,8 @@ from .models import Formulario, ChecklistItem
 from django.db import models
 from django.contrib.auth.models import User
 
+
+
 class Checklist(models.Model):
     nome = models.CharField(max_length=100)  # Nome do checklist
     descricao = models.TextField(blank=True, null=True)  # Descrição opcional
@@ -20,13 +22,7 @@ class ItemChecklist(models.Model):
         return self.descricao
 
 class FormularioForm(forms.ModelForm):
-    nome = forms.CharField(max_length=100, required=True)  # Adiciona o campo "nome" ao formulário
-
-    checklist = forms.ModelMultipleChoiceField(
-        queryset=ChecklistItem.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False
-    )
+    nome = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'Digite o nome do formulário'}))  # Campo de input para o nome
 
     data_criacao = forms.DateTimeField(
         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
@@ -35,4 +31,6 @@ class FormularioForm(forms.ModelForm):
 
     class Meta:
         model = Formulario
-        fields = ['nome', 'checklist', 'data_criacao'] 
+        fields = ['nome', 'data_criacao']  # Removemos o checklist do formulário, pois ele será exibido separadamente
+
+        
