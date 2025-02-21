@@ -21,14 +21,13 @@
         {{ form.data_criacao.errors }}
         <br><br>
     
-        <!-- Campo Checklist -->
-        <label>Checklist:</label>
-        {{ form.checklist }}
-        {{ form.checklist.errors }}
-        <br><br>
-    
-        <!-- Botão de Envio -->
-        <button type="submit">Enviar</button>
+        <!-- Checklist -->
+        <h1>Criar Formulário</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Renderiza o formulário -->
+        <button type="submit">Salvar</button>
     </form>
+    
 </body>
 </html>
