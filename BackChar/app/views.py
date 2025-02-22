@@ -9,7 +9,48 @@ from rest_framework import status
 from .models import Formulario, ChecklistItem, CSVFile
 from .forms import FormularioForm
 from django.db.models import Avg
+from app.models import Formulario
+import pandas as pd
+from .ai import sugerir_treinamentos, prever_erros_futuros
 
+def analise_view(request):
+    # Chama as funções de IA
+    sugestoes = sugerir_treinamentos()
+    previsao = prever_erros_futuros()
+
+    # Renderiza o template com os dados
+    return render(request, 'analise.html', {
+        'sugestoes': sugestoes,
+        'previsao': previsao
+    })
+
+def exportar_csv(request):
+    # Consulta os dados da tabela Formulario
+    formularios = Formulario.objects.all()
+
+    # Cria uma lista de dicionários com os dados
+    dados = []
+    for formulario in formularios:
+        for item in formulario.checklist.all():
+            dados.append({
+                'nome': formulario.nome,
+                'percentual_conclusao': formulario.percentual_conclusao,
+                'data_criacao': formulario.data_criacao.strftime('%Y-%m-%d %H:%M:%S'),
+                'checklist_descricao': item.descricao,
+                'checklist_is_checked': item.is_checked
+            })
+
+    # Converte a lista de dicionários para um DataFrame do pandas
+    df = pd.DataFrame(dados)
+
+    # Cria uma resposta HTTP com o arquivo CSV
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="formularios_checklist.csv"'
+
+    # Salva o DataFrame no response
+    df.to_csv(response, index=False)
+
+    return response
 
 # Página inicial
 def home(request):

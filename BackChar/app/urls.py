@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     home, signup, user_login, user_logout, 
     CSVUploadView, formulario_view, salvar_checklist, 
-    rendimento_equipe, minha_view_protegida,
+    rendimento_equipe, minha_view_protegida, exportar_csv, analise_view
 )
 
 urlpatterns = [
@@ -14,6 +14,9 @@ urlpatterns = [
     path('rendimento_equipe/', rendimento_equipe, name='rendimento_equipe'),  # Rendimento da equipe
     path('formulario/', formulario_view, name='formulario'),  # Formulário
     path('salvar_checklist/<int:formulario_id>/', salvar_checklist, name='salvar_checklist'),  # Checklist
-    path('protegida/', minha_view_protegida, name='protegida'),  # Página protegida (exemplo)
+    path('protegida/', minha_view_protegida, name='protegida'),  # Página protegida 
+    path('exportar-csv/', exportar_csv, name='exportar_csv'),
+    path('analise/', analise_view, name='analise'),
+    
     
 ]

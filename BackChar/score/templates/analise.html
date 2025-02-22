@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Desempenho</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        .chart-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Análise de Desempenho</h1>
+
+        <!-- Card para Sugestões de Treinamentos -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Sugestões de Treinamentos</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for sugestao in sugestoes %}
+                    <li class="list-group-item">{{ sugestao }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card para Previsão de Erros Futuros -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Previsão de Erros Futuros</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Previsão de erros para o mês <strong>{{ previsao.proximo_mes }}</strong>: 
+                    <strong>{{ previsao.erros_previstos|floatformat:2 }}</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Gráfico (Opcional) -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Gráfico de Desempenho</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="desempenhoChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para o Gráfico -->
+    <script>
+        const ctx = document.getElementById('desempenhoChart').getContext('2d');
+        const desempenhoChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Emily', 'João', 'Maria', 'Pedro'],  // Substitua pelos nomes dos funcionários
+                datasets: [{
+                    label: 'Percentual de Conclusão',
+                    data: [80, 50, 90, 60],  // Substitua pelos dados reais
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
