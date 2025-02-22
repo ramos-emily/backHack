@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendimento da Equipe</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            width: 50%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rendimento da Equipe</h1>
+    <p>Média de Conclusão: {{ media_equipe|default:"0" }}%</p>
+
+    <!-- Tabela de Formulários -->
+    <h2>Formulários</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Percentual de Conclusão</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for formulario in formularios %}
+            <tr>
+                <td>{{ formulario.nome }}</td>
+                <td>{{ formulario.percentual_conclusao|floatformat:2 }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Gráfico de Rendimento -->
+    <h2>Gráfico de Rendimento</h2>
+    <div class="chart-container">
+        <canvas id="rendimentoChart"></canvas>
+    </div>
+
+    <script>
+        const formularios = [
+            {% for formulario in formularios %}
+            {
+                nome: "{{ formulario.nome }}",
+                percentual: {{ formulario.percentual_conclusao|floatformat:2 }}
+            },
+            {% endfor %}
+        ];
+
+        const labels = formularios.map(f => f.nome);
+        const data = formularios.map(f => f.percentual);
+
+        const ctx = document.getElementById('rendimentoChart').getContext('2d');
+        const rendimentoChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Percentual de Conclusão',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toFixed(2) + '%'; // Exibe com duas casas decimais
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw.toFixed(2) + '%'; // Exibe com duas casas decimais
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
